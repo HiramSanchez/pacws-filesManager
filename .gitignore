@@ -1,0 +1,75 @@
+# ============================
+# Node
+# ============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# ============================
+# Vite
+# ============================
+dist/
+dist-ssr/
+*.local
+
+# Vite cache
+.cache/
+.vite/
+vite.config.ts.timestamp*
+
+# ============================
+# Logs
+# ============================
+logs/
+*.log
+*.log.*
+debug.log
+
+# ============================
+# OS files
+# ============================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ============================
+# Editors / IDEs
+# ============================
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains (WebStorm, etc.)
+.idea/
+*.iml
+
+# ============================
+# Build Tools
+# ============================
+*.tsbuildinfo
+
+# ============================
+# Misc
+# ============================
+*.local

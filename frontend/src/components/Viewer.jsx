@@ -5,6 +5,8 @@ import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 
 export default function Viewer({ file, personName }) {
   const viewerRef = useRef(null);
+  const videoRef = useRef(null);
+  const redirectingRef = useRef(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const toggleFullscreen = () => {
@@ -17,10 +19,46 @@ export default function Viewer({ file, personName }) {
   };
 
   useEffect(() => {
-    const onChange = () => setIsFullscreen(!!document.fullscreenElement);
+    const onChange = () => {
+      const fsEl = document.fullscreenElement;
+      setIsFullscreen(!!fsEl);
+
+      if (
+        fsEl &&
+        videoRef.current &&
+        fsEl === videoRef.current &&
+        !redirectingRef.current
+      ) {
+        redirectingRef.current = true;
+        document.exitFullscreen?.();
+        setTimeout(() => {
+          viewerRef.current?.requestFullscreen?.();
+          setTimeout(() => {
+            redirectingRef.current = false;
+          }, 50);
+        }, 0);
+      }
+    };
+
     document.addEventListener("fullscreenchange", onChange);
     return () => document.removeEventListener("fullscreenchange", onChange);
   }, []);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    const originalRequest = v.requestFullscreen?.bind(v);
+    if (originalRequest) {
+      v.requestFullscreen = () => viewerRef.current?.requestFullscreen?.();
+    }
+
+    return () => {
+      if (originalRequest) v.requestFullscreen = originalRequest;
+    };
+  }, [file?.url]);
+
+
 
   if (!file) {
     return (
@@ -47,12 +85,19 @@ export default function Viewer({ file, personName }) {
         height: "100%",
         position: "relative",
         backgroundColor: "#0b0b0b",
+        "&:fullscreen": { backgroundColor: "#0b0b0b" },
         border: "1px solid #1e1e1e",
         boxShadow: "0 30px 80px rgba(0,0,0,0.75)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
+        "& video::-webkit-media-controls-fullscreen-button": {
+          display: "none",
+        },
+        "& video::-webkit-media-controls-picture-in-picture-button": {
+          display: "none",
+        },
       }}
     >
       {/* Header */}
@@ -92,12 +137,23 @@ export default function Viewer({ file, personName }) {
       {/* Media */}
       {file.type === "video" ? (
         <video
+          ref={videoRef}
           src={file.url}
           controls
+          playsInline
+          disablePictureInPicture
+          controlsList="nofullscreen noremoteplayback noplaybackrate"
+          onDoubleClick={(e) => e.preventDefault()}
+          onKeyDown={(e) => {
+            // bloquea atajos típicos de fullscreen en players
+            if (e.key?.toLowerCase() === "f" || e.key === "Enter")
+              e.preventDefault();
+          }}
           style={{
             width: "100%",
             height: "100%",
             objectFit: "contain",
+            backgroundColor: "#000",
           }}
         />
       ) : (

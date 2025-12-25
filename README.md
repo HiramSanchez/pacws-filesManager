@@ -36,10 +36,6 @@ The project includes a dynamic **category system from MongoDB**, a sidebar with 
 - Categories are fetched from a MongoDB collection.
 - Rendered as checkbox filters.
 
-### 👥 Filter by Person
-- Dropdown selector for filtering items by person.
-- Names are retrieved from MongoDB.
-
 ## **Backend Overview**
 
 🔌 This frontend connects to a backend that:

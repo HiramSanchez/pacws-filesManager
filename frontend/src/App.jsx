@@ -90,22 +90,77 @@ export default function App() {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#0f0f0f",
+        color: "#eaeaea",
+        overflow: "hidden",
+      }}
+    >
+      {/* TopBar */}
       <TopBar onFolderSelect={handleFolderSelect} />
 
-      <SideBar
-        categories={categories}
-        selectedCategories={selectedCategories}
-        onToggleCategory={toggleCategory}
-        persons={filesData}
-        selectedPerson={selectedPerson}
-        onSelectPerson={setSelectedPerson}
-      />
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          overflow: "hidden",
+        }}
+      >
+        {/* SideBar */}
+        <SideBar
+          categories={categories}
+          selectedCategories={selectedCategories}
+          onToggleCategory={toggleCategory}
+          persons={filesData}
+          selectedPerson={selectedPerson}
+          onSelectPerson={setSelectedPerson}
+        />
 
-      <Box sx={{ ml: "250px", mt: 8, p: 2 }}>
-        <Viewer file={selectedFile} personName={getSelectedPersonName()} />
-        <ThumbnailGallery files={filteredFiles()} onSelect={setSelectedFile} />
+        {/* Main content */}
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
+          {/* Viewer */}
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#111",
+              overflow: "hidden",
+            }}
+          >
+            <Viewer file={selectedFile} personName={getSelectedPersonName()} />
+          </Box>
+
+          {/* Thumbnail gallery */}
+          <Box
+            sx={{
+              height: 180,
+              backgroundColor: "#0b0b0b",
+              borderTop: "1px solid #1e1e1e",
+              overflowX: "hidden",
+            }}
+          >
+            <ThumbnailGallery
+              files={filteredFiles()}
+              selectedFile={selectedFile}
+              onSelectFile={setSelectedFile}
+            />
+          </Box>
+        </Box>
       </Box>
-    </>
+    </Box>
   );
 }

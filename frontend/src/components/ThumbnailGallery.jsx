@@ -1,42 +1,216 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Card, CardMedia, Grid, Skeleton } from "@mui/material";
+import React, { useMemo, useRef } from "react";
+import { Box, Typography, IconButton } from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-export default function ThumbnailGallery({ files, onSelect }) {
-  const [visibleCount, setVisibleCount] = useState(20);
-  const loadRef = useRef();
+export default function Gallery({ files, selectedFile, onSelectFile }) {
+  const scrollerRef = useRef(null);
 
-  useEffect(() => {
-    setVisibleCount(20);
-  }, [files]);
+  const scrollByAmount = (dir) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const amount = Math.max(320, Math.floor(el.clientWidth * 0.6));
+    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+  };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting) setVisibleCount(v => v + 20);
-      }
-      , { threshold: 1 }
-    );
-
-    if (loadRef.current) observer.observe(loadRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const showArrows = useMemo(() => (files?.length || 0) > 0, [files]);
 
   return (
-    <div style={{ overflowY: "auto", height: "185px", padding: "5px", marginTop: "35px" }}>
-      <Grid container spacing={1}>
-        {files.slice(0, visibleCount).map(file => (
-          <Grid item xs={6} sm={3} md={1.2} key={file.fileName}>
-            <Card onClick={() => onSelect(file)} sx={{ cursor: "pointer" }}>
-              {file.thumbnail ? (
-                <CardMedia component="img" height="90" image={file.thumbnail} />
+    <Box
+      sx={{
+        height: "18vh",
+        minHeight: 179,
+        backgroundColor: "#0f0f0f",
+        borderTop: "1px solid #1e1e1e",
+        px: 2,
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+      }}
+    >
+      {/* Left fade + button */}
+      {showArrows && (
+        <Box
+          sx={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 56,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+            zIndex: 2,
+            background:
+              "linear-gradient(to right, rgba(15,15,15,1), rgba(15,15,15,0))",
+          }}
+        >
+          <IconButton
+            onClick={() => scrollByAmount(-1)}
+            sx={{
+              pointerEvents: "auto",
+              color: "#eaeaea",
+              backgroundColor: "rgba(255,255,255,0.06)",
+              "&:hover": { backgroundColor: "rgba(255,255,255,0.14)" },
+            }}
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+        </Box>
+      )}
+
+      {/* Scroller */}
+      <Box
+        ref={scrollerRef}
+        sx={{
+          display: "flex",
+          gap: 2,
+          overflowX: "auto",
+          overflowY: "hidden",
+          width: "100%",
+          scrollBehavior: "smooth",
+          scrollSnapType: "x proximity",
+          pr: 6,
+          pl: 6,
+
+          /* Ocultar scrollbar pero mantener scroll */
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": { display: "none" },
+        }}
+      >
+        {files.map((file, index) => {
+          const active = selectedFile?.url === file.url;
+
+          return (
+            <Box
+              key={index}
+              onClick={() => onSelectFile(file)}
+              sx={{
+                flex: "0 0 auto",
+                width: 120,
+                aspectRatio: "1 / 1",
+                borderRadius: 2,
+                overflow: "hidden",
+                cursor: "pointer",
+                position: "relative",
+                backgroundColor: "#1a1a1a",
+                border: active ? "2px solid #6D248C" : "1px solid #1e1e1e",
+                boxShadow: active
+                  ? "0 0 0 2px rgba(109,36,140,0.25)"
+                  : "none",
+                transform: active ? "scale(1.03)" : "scale(1)",
+                transition: "all 0.2s ease",
+                scrollSnapAlign: "start",
+                "&:hover": {
+                  transform: "scale(1.03)",
+                },
+              }}
+            >
+              {file.type === "video" ? (
+                <video
+                  src={file.url}
+                  muted
+                  preload="metadata"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
               ) : (
-                <Skeleton variant="rectangular" height={120} />
+                <img
+                  src={file.url}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
               )}
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <div ref={loadRef} style={{ height: "20px" }} />
-    </div>
+
+              {/* Overlay hover */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  backgroundColor: "rgba(0,0,0,0.35)",
+                  opacity: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "opacity 0.2s ease",
+                  "&:hover": {
+                    opacity: 1,
+                  },
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    color: "white",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {file.type === "video" ? "▶" : "🔍"}
+                </Typography>
+              </Box>
+
+              {/* Video badge */}
+              {file.type === "video" && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 6,
+                    right: 6,
+                    px: 0.8,
+                    py: 0.2,
+                    fontSize: 10,
+                    borderRadius: 1,
+                    backgroundColor: "rgba(0,0,0,0.6)",
+                    color: "#ccc",
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  VIDEO
+                </Box>
+              )}
+            </Box>
+          );
+        })}
+      </Box>
+
+      {/* Right fade + button */}
+      {showArrows && (
+        <Box
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: 56,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+            background:
+              "linear-gradient(to left, rgba(15,15,15,1), rgba(15,15,15,0))",
+          }}
+        >
+          <IconButton
+            onClick={() => scrollByAmount(1)}
+            sx={{
+              pointerEvents: "auto",
+              color: "#eaeaea",
+              backgroundColor: "rgba(255,255,255,0.06)",
+              "&:hover": { backgroundColor: "rgba(255,255,255,0.14)" },
+            }}
+          >
+            <ChevronRightIcon />
+          </IconButton>
+        </Box>
+      )}
+    </Box>
   );
 }

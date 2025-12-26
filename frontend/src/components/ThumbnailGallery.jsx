@@ -1,11 +1,11 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 export default function Gallery({ files, selectedFile, onSelectFile }) {
   const scrollerRef = useRef(null);
-
+  const itemRefs = useRef(new Map());
   const scrollByAmount = (dir) => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -14,6 +14,15 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
   };
 
   const showArrows = useMemo(() => (files?.length || 0) > 0, [files]);
+
+  useEffect(() => {
+    if (!selectedFile) return;
+    const el = itemRefs.current.get(selectedFile.fileName);
+    if (el) {
+      el.scrollIntoView({ behavior: "auto", inline: "nearest", block: "nearest" });
+    }
+  }, [selectedFile]);
+
 
   return (
     <Box
@@ -74,17 +83,20 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
           pr: 6,
           pl: 6,
 
-          /* Ocultar scrollbar pero mantener scroll */
           scrollbarWidth: "none",
           "&::-webkit-scrollbar": { display: "none" },
         }}
       >
         {files.map((file, index) => {
-          const active = selectedFile?.url === file.url;
+          const active = selectedFile?.fileName === file.fileName;
 
           return (
             <Box
-              key={index}
+              ref={(node) => {
+                if (!node) return;
+                itemRefs.current.set(file.fileName, node);
+              }}
+              key={file.fileName}
               onClick={() => onSelectFile(file)}
               sx={{
                 flex: "0 0 auto",

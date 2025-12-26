@@ -29,8 +29,9 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
       sx={{
         height: "18vh",
         minHeight: 179,
-        backgroundColor: "#0f0f0f",
-        borderTop: "1px solid #1e1e1e",
+        bgcolor: "background.default",
+        borderTop: "1px solid",
+        borderTopColor: "divider",
         px: 2,
         display: "flex",
         alignItems: "center",
@@ -52,7 +53,7 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
             pointerEvents: "none",
             zIndex: 2,
             background:
-              "linear-gradient(to right, rgba(15,15,15,1), rgba(15,15,15,0))",
+              "linear-gradient(to right, rgba(15,15,15,0.6), rgba(15,15,15,0))",
           }}
         >
           <IconButton
@@ -106,8 +107,9 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
                 overflow: "hidden",
                 cursor: "pointer",
                 position: "relative",
-                backgroundColor: "#1a1a1a",
-                border: active ? "2px solid #6D248C" : "1px solid #1e1e1e",
+                bgcolor: "divider",
+                border: active ? "2px solid" : "1px solid",
+                borderColor: active ? "#6D248C" : "divider",
                 boxShadow: active ? "0 0 0 2px rgba(109,36,140,0.25)" : "none",
                 transform: active ? "scale(1.03)" : "scale(1)",
                 transition: "all 0.2s ease",
@@ -194,7 +196,7 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
             justifyContent: "center",
             pointerEvents: "none",
             background:
-              "linear-gradient(to left, rgba(15,15,15,1), rgba(15,15,15,0))",
+              "linear-gradient(to left, rgba(15,15,15,0.6), rgba(15,15,15,0))",
           }}
         >
           <IconButton

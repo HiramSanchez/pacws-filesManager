@@ -70,6 +70,7 @@ export default function Viewer({ file, personName }) {
           alignItems: "center",
           justifyContent: "center",
           color: "#777",
+          bgcolor: "background.paper",
         }}
       >
         Select a file
@@ -84,9 +85,10 @@ export default function Viewer({ file, personName }) {
         width: "100%",
         height: "100%",
         position: "relative",
-        backgroundColor: "#0b0b0b",
+        bgcolor: "background.paper",
         "&:fullscreen": { backgroundColor: "#0b0b0b" },
-        border: "1px solid #1e1e1e",
+        border: "1px solid",
+        borderColor: "divider",
         boxShadow: "0 30px 80px rgba(0,0,0,0.75)",
         display: "flex",
         alignItems: "center",
@@ -115,10 +117,10 @@ export default function Viewer({ file, personName }) {
             alignItems: "center",
             zIndex: 2,
             background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0))",
+              "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))",
           }}
         >
-          <Typography variant="subtitle2" sx={{ color: "#ccc" }}>
+          <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
             {personName || ""}
           </Typography>
 
@@ -145,7 +147,6 @@ export default function Viewer({ file, personName }) {
           controlsList="nofullscreen noremoteplayback noplaybackrate"
           onDoubleClick={(e) => e.preventDefault()}
           onKeyDown={(e) => {
-            // bloquea atajos típicos de fullscreen en players
             if (e.key?.toLowerCase() === "f" || e.key === "Enter")
               e.preventDefault();
           }}

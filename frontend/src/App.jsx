@@ -9,7 +9,7 @@ import { getFileType } from "./utils/getFileType";
 import { Box } from "@mui/material";
 
 
-export default function App() {
+export default function App({ mode, toggleMode }) {
   const [categories, setCategories] = useState([]);
   const [filesData, setFilesData] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -156,7 +156,7 @@ export default function App() {
       }}
     >
       {/* TopBar */}
-      <TopBar onFolderSelect={handleFolderSelect} />
+      <TopBar onFolderSelect={handleFolderSelect} mode={mode} toggleMode={toggleMode} />
 
       <Box
         sx={{

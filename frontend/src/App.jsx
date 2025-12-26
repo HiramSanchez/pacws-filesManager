@@ -9,7 +9,7 @@ import { getFileType } from "./utils/getFileType";
 import { Box } from "@mui/material";
 
 
-export default function App() {
+export default function App({ mode, toggleMode }) {
   const [categories, setCategories] = useState([]);
   const [filesData, setFilesData] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -36,6 +36,7 @@ export default function App() {
     fetchFiles().then(setFilesData);
   }, []);
 
+
   const handleFolderSelect = async (folder) => {
     cleanupObjectUrls();  
     const filesArr = [];
@@ -61,32 +62,69 @@ export default function App() {
     setLocalFiles(filesArr);
   };
 
-  const filteredFiles = useMemo(() => {
+  const filtered = useMemo(() => {
     let f = localFiles;
 
     if (selectedPerson) {
-      const person = filesData.find(p => p.name === selectedPerson);
+      const person = filesData.find((p) => p.name === selectedPerson);
       if (person) {
-        const allowed = new Set(person.files.map(x => x.fileName));
-        f = f.filter(x => allowed.has(x.fileName));
+        const allowed = new Set(person.files.map((x) => x.fileName));
+        f = f.filter((x) => allowed.has(x.fileName));
       }
     }
 
     if (selectedCategories.length > 0) {
-      f = f.filter(file => {
-        const person = filesData.find(p =>
-          p.files.some(ff => ff.fileName === file.fileName)
+      f = f.filter((file) => {
+        const person = filesData.find((p) =>
+          p.files.some((ff) => ff.fileName === file.fileName)
         );
         if (!person) return false;
 
-        const fileMeta = person.files.find(ff => ff.fileName === file.fileName);
+        const fileMeta = person.files.find((ff) => ff.fileName === file.fileName);
         const fileCats = fileMeta.categories.split(",");
-        return selectedCategories.every(cat => fileCats.includes(cat));
+
+        return selectedCategories.every((cat) => fileCats.includes(cat));
       });
     }
 
     return f;
   }, [localFiles, selectedPerson, selectedCategories, filesData]);
+
+  const sortedFiles = useMemo(() => {
+    return [...filtered].sort((a, b) =>
+      (a.fileName || "").localeCompare(b.fileName || "", undefined, {
+        numeric: true,
+      })
+    );
+  }, [filtered]);
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (tag === "input" || tag === "textarea") return;
+
+      if (!sortedFiles.length) return;
+
+      const idx = selectedFile
+        ? sortedFiles.findIndex(f => f.fileName === selectedFile.fileName)
+        : -1;
+
+      if (e.key === "ArrowRight") {
+        const next = sortedFiles[Math.min(idx + 1, sortedFiles.length - 1)] || sortedFiles[0];
+        setSelectedFile(next);
+      }
+
+      if (e.key === "ArrowLeft") {
+        const prev = sortedFiles[Math.max(idx - 1, 0)] || sortedFiles[0];
+        setSelectedFile(prev);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [sortedFiles, selectedFile]);
 
 
   const toggleCategory = (cat) => {
@@ -118,7 +156,7 @@ export default function App() {
       }}
     >
       {/* TopBar */}
-      <TopBar onFolderSelect={handleFolderSelect} />
+      <TopBar onFolderSelect={handleFolderSelect} mode={mode} toggleMode={toggleMode} />
 
       <Box
         sx={{
@@ -170,7 +208,7 @@ export default function App() {
             }}
           >
             <ThumbnailGallery
-              files={filteredFiles}
+              files={sortedFiles}
               selectedFile={selectedFile}
               onSelectFile={setSelectedFile}
             />

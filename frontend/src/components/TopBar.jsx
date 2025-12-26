@@ -1,7 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Box, IconButton, Tooltip } from "@mui/material";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
-export default function TopBar({ onFolderSelect }) {
+
+export default function TopBar({ onFolderSelect, mode, toggleMode }) {
   const handleSelectFolder = async () => {
     try {
       const dirHandle = await window.showDirectoryPicker();
@@ -14,9 +17,9 @@ export default function TopBar({ onFolderSelect }) {
       position="sticky"
       elevation={0}
       sx={{
-        backgroundColor: "#0b0b0b",
-        borderBottom: "1px solid #1e1e1e",
-        // 👇 clave: arriba del Drawer
+        bgcolor: "background.paper",
+        borderBottom: "1px solid",
+        borderColor: "divider",
         zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
@@ -27,16 +30,33 @@ export default function TopBar({ onFolderSelect }) {
               width: 10,
               height: 10,
               borderRadius: "50%",
-              backgroundColor: "#6D248C",
+              bgcolor: "primary.main",
               boxShadow: "0 0 12px rgba(109,36,140,0.6)",
             }}
           />
-          <Typography sx={{ fontWeight: 700, letterSpacing: 0.6 }}>
+          <Typography sx={{ fontWeight: 700, letterSpacing: 0.6, color: "text.primary" }}>
             File Manager
           </Typography>
         </Box>
 
         <Box sx={{ flexGrow: 1 }} />
+
+        {/* Theme toggle */}
+        <Tooltip title={mode === "dark" ? "Light mode" : "Dark mode"}>
+          <IconButton
+            onClick={toggleMode}
+            sx={{
+              mr: 1.5,
+              color: "text.primary",
+              border: "1px solid",
+              borderColor: "divider",
+              bgcolor: "transparent",
+              "&:hover": { bgcolor: "action.hover" },
+            }}
+          >
+            {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
+        </Tooltip>
 
         <Button
           onClick={handleSelectFolder}
@@ -44,8 +64,8 @@ export default function TopBar({ onFolderSelect }) {
           sx={{
             textTransform: "none",
             borderRadius: 2,
-            backgroundColor: "#6D248C",
-            "&:hover": { backgroundColor: "#5b1f75" },
+            bgcolor: "primary.main",
+            "&:hover": { bgcolor: "primary.dark" },
           }}
         >
           Select folder
@@ -53,4 +73,5 @@ export default function TopBar({ onFolderSelect }) {
       </Toolbar>
     </AppBar>
   );
+
 }

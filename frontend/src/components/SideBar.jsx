@@ -54,8 +54,9 @@ export default function SideBar({
         "& .MuiDrawer-paper": {
           width: 72,
           boxSizing: "border-box",
-          backgroundColor: "#0b0b0b",
-          borderRight: "1px solid #1e1e1e",
+          bgcolor: "background.paper",
+          borderRight: "1px solid",
+          borderRightColor: "divider",
           overflowX: "hidden",
           top: 58,
           height: "calc(100% - 58px)",
@@ -87,14 +88,14 @@ export default function SideBar({
                     borderRadius: 2,
                     fontSize: 12,
                     fontWeight: "BOLD",
-                    color: active ? "white" : "#777",
+                    color: active ? "white" : "text.secondary",
                     backgroundColor: active ? "#6D248C" : "transparent",
                     border: "1px solid",
-                    borderColor: active ? "#6D248C" : "#1e1e1e",
+                    borderColor: active ? "#6D248C" : "divider",
                     "&:hover": {
                       backgroundColor: active
                         ? "#6D248C"
-                        : "rgba(255,255,255,0.08)",
+                        : "background.hover",
                     },
                   }}
                 >
@@ -115,13 +116,14 @@ export default function SideBar({
               width: 46,
               height: 46,
               borderRadius: 2,
-              backgroundColor: "#111",
-              border: "1px solid #1e1e1e",
-              color: "#eaeaea",
+              bgcolor: "background.light",
+              border: "1px solid",
+              borderColor: "divider",
+              color: "text.secondary",
               fontWeight: 900,
               fontSize: 12,
               letterSpacing: 0.5,
-              "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
+              "&:hover": { backgroundColor: "background.hover" },
             }}
           >
             {selectedBadge}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import TopBar from "./components/TopBar";
 import SideBar from "./components/SideBar";
 import ThumbnailGallery from "./components/ThumbnailGallery";
@@ -8,6 +8,7 @@ import { generateVideoThumbnail } from "./utils/generateVideoThumbnail";
 import { getFileType } from "./utils/getFileType";
 import { Box } from "@mui/material";
 
+
 export default function App() {
   const [categories, setCategories] = useState([]);
   const [filesData, setFilesData] = useState([]);
@@ -16,12 +17,27 @@ export default function App() {
   const [localFiles, setLocalFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const objectUrlsRef = useRef(new Set());
+  const trackUrl = (u) => {
+    if (u) objectUrlsRef.current.add(u);
+    return u;
+  };
+
+  const cleanupObjectUrls = () => {
+    for (const u of objectUrlsRef.current) {
+      try { URL.revokeObjectURL(u); } catch {}
+    }
+    objectUrlsRef.current.clear();
+  };
+
+
   useEffect(() => {
     fetchCategories().then(setCategories);
     fetchFiles().then(setFilesData);
   }, []);
 
   const handleFolderSelect = async (folder) => {
+    cleanupObjectUrls();  
     const filesArr = [];
 
     for await (const entry of folder.values()) {
@@ -31,12 +47,12 @@ export default function App() {
       const type = getFileType(file);
 
       let thumbnail = null;
-      if (type === "video") thumbnail = await generateVideoThumbnail(file);
-      if (type === "image") thumbnail = URL.createObjectURL(file);
+      if (type === "video") thumbnail = trackUrl(await generateVideoThumbnail(file));
+      if (type === "image") thumbnail = trackUrl(URL.createObjectURL(file));
 
       filesArr.push({
         fileName: file.name.split(".")[0],
-        url: URL.createObjectURL(file),
+        url: trackUrl(URL.createObjectURL(file)),
         type,
         thumbnail,
       });
@@ -45,14 +61,14 @@ export default function App() {
     setLocalFiles(filesArr);
   };
 
-  const filteredFiles = () => {
+  const filteredFiles = useMemo(() => {
     let f = localFiles;
 
     if (selectedPerson) {
       const person = filesData.find(p => p.name === selectedPerson);
       if (person) {
-        const allowed = person.files.map(x => x.fileName);
-        f = f.filter(x => allowed.includes(x.fileName));
+        const allowed = new Set(person.files.map(x => x.fileName));
+        f = f.filter(x => allowed.has(x.fileName));
       }
     }
 
@@ -65,13 +81,13 @@ export default function App() {
 
         const fileMeta = person.files.find(ff => ff.fileName === file.fileName);
         const fileCats = fileMeta.categories.split(",");
-
         return selectedCategories.every(cat => fileCats.includes(cat));
       });
     }
 
     return f;
-  };
+  }, [localFiles, selectedPerson, selectedCategories, filesData]);
+
 
   const toggleCategory = (cat) => {
     setSelectedCategories(prev =>
@@ -154,7 +170,7 @@ export default function App() {
             }}
           >
             <ThumbnailGallery
-              files={filteredFiles()}
+              files={filteredFiles}
               selectedFile={selectedFile}
               onSelectFile={setSelectedFile}
             />

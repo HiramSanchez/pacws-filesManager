@@ -96,9 +96,7 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
                 position: "relative",
                 backgroundColor: "#1a1a1a",
                 border: active ? "2px solid #6D248C" : "1px solid #1e1e1e",
-                boxShadow: active
-                  ? "0 0 0 2px rgba(109,36,140,0.25)"
-                  : "none",
+                boxShadow: active ? "0 0 0 2px rgba(109,36,140,0.25)" : "none",
                 transform: active ? "scale(1.03)" : "scale(1)",
                 transition: "all 0.2s ease",
                 scrollSnapAlign: "start",
@@ -107,28 +105,17 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
                 },
               }}
             >
-              {file.type === "video" ? (
-                <video
-                  src={file.url}
-                  muted
-                  preload="metadata"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              ) : (
-                <img
-                  src={file.url}
-                  alt=""
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              )}
+              <img
+                src={file.thumbnail || (file.type === "image" ? file.url : "")}
+                alt=""
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
 
               {/* Overlay hover */}
               <Box

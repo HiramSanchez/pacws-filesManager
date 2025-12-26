@@ -6,10 +6,10 @@ export const getAppTheme = (mode) =>
       mode,
       primary: { main: "#6D248C" },
       background: {
-        default: mode === "dark" ? "#0f0f0f" : "#f5f6f8",
+        default: mode === "dark" ? "#1e1e1e" : "#c5c5c5ff",
         paper: mode === "dark" ? "#0b0b0b" : "#ffffff",
         hover: mode === "dark" ? "rgba(255,255,255,0.08)" : "#e3e2e2ff",
-        light: mode === "dark" ? "#111" : "#f5f6f8",
+        light: mode === "dark" ? "#111" : "#c5c5c5ff",
       },
       divider: mode === "dark" ? "#1e1e1e" : "#e5e7eb",
     },

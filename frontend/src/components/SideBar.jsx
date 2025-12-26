@@ -116,7 +116,7 @@ export default function SideBar({
               width: 46,
               height: 46,
               borderRadius: 2,
-              bgcolor: "background.light",
+              bgcolor: "transparent",
               border: "1px solid",
               borderColor: "divider",
               color: "text.secondary",

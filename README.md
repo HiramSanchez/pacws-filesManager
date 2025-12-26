@@ -36,6 +36,21 @@ The project includes a dynamic **category system from MongoDB**, a sidebar with 
 - Categories are fetched from a MongoDB collection.
 - Rendered as checkbox filters.
 
+### 🔆🌙 Theme
+- Light Mode
+- Dark Mode
+
+## 🎞️ Screens
+
+<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss4.png" width=800>
+
+<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss1.png" width=800>
+
+<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss2.png" width=800>
+
+<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss3.png" width=800>
+
+
 ## **Backend Overview**
 
 🔌 This frontend connects to a backend that:

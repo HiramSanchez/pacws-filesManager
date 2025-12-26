@@ -1,0 +1,146 @@
+[{
+  "_id": {
+    "$oid": "694ee9f07d8c22160190e1d2"
+  },
+  "name": "Loreto, BCS",
+  "files": [
+    {
+      "fileName": "loretoNat01",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "loretoNat02",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "loretoNat03",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "loretoNat04",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "loretoNat05",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "loretoCity01",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "loretoCity02",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "loretoCity03",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "loretoCity04",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "loretoCity05",
+      "categories": "cty,img"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "694eea857d8c22160190e1d4"
+  },
+  "name": "Mazatlan, SIN",
+  "files": [
+    {
+      "fileName": "mazatlanNat01",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "mazatlanNat02",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "mazatlanNat03",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "mazatlanNat04",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "mazatlanNat05",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "mazatlanCity01",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "mazatlanCity02",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "mazatlanCity03",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "mazatlanCity04",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "mazatlanCity05",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "mazatlanCity06",
+      "categories": "cty,img"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "694eeae07d8c22160190e1d6"
+  },
+  "name": "Guadalajara, JAL",
+  "files": [
+    {
+      "fileName": "guadalajaraNat01",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "guadalajaraNat02",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "guadalajaraNat03",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "guadalajaraNat04",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "guadalajaraNat05",
+      "categories": "nat,img"
+    },
+    {
+      "fileName": "guadalajaraCity01",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "guadalajaraCity02",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "guadalajaraCity03",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "guadalajaraCity04",
+      "categories": "cty,img"
+    },
+    {
+      "fileName": "guadalajaraCity05",
+      "categories": "cty,img"
+    }
+  ]
+}]

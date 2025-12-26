@@ -1,0 +1,11 @@
+[{
+  "_id": {
+    "$oid": "694ee8dc7d8c22160190e1cc"
+  },
+  "Categories": [
+    "nat",
+    "cty",
+    "img",
+    "vid"
+  ]
+}]

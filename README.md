@@ -42,13 +42,13 @@ The project includes a dynamic **category system from MongoDB**, a sidebar with 
 
 ## 🎞️ Screens
 
-<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss4.png" width=800>
+<img src="https://github.com/HiramSanchez/pacws-filesManager/blob/main/img/resources/pacws-ss4.png" width=800>
 
-<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss1.png" width=800>
+<img src="https://github.com/HiramSanchez/pacws-filesManager/blob/main/img/resources/pacws-ss1.png" width=800>
 
-<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss2.png" width=800>
+<img src="https://github.com/HiramSanchez/pacws-filesManager/blob/main/img/resources/pacws-ss2.png" width=800>
 
-<img src="https://github.com/HiramSanchez/pacws-filesManager/resources/pacws-ss3.png" width=800>
+<img src="https://github.com/HiramSanchez/pacws-filesManager/blob/main/img/resources/pacws-ss3.png" width=800>
 
 
 ## **Backend Overview**

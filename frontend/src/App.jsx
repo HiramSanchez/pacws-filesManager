@@ -203,7 +203,8 @@ export default function App({ mode, toggleMode }) {
             sx={{
               height: 180,
               backgroundColor: "#0b0b0b",
-              borderTop: "1px solid #1e1e1e",
+              borderTop: "1px solid", 
+              borderTopColor: "divider",
               overflowX: "hidden",
             }}
           >

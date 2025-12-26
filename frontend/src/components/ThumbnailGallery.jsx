@@ -29,7 +29,7 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
       sx={{
         height: "18vh",
         minHeight: 179,
-        bgcolor: "background.default",
+        bgcolor: "background.light",
         borderTop: "1px solid",
         borderTopColor: "divider",
         px: 2,
@@ -109,7 +109,7 @@ export default function Gallery({ files, selectedFile, onSelectFile }) {
                 position: "relative",
                 bgcolor: "divider",
                 border: active ? "2px solid" : "1px solid",
-                borderColor: active ? "#6D248C" : "divider",
+                borderColor: active ? "#6D248C" : "background.default",
                 boxShadow: active ? "0 0 0 2px rgba(109,36,140,0.25)" : "none",
                 transform: active ? "scale(1.03)" : "scale(1)",
                 transition: "all 0.2s ease",

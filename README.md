@@ -12,6 +12,7 @@ The project includes a dynamic **category system from MongoDB**, a sidebar with 
 ## 📂 Table of Contents  
 - [Tech Stack](#tech-stack)  
 - [Features](#features)  
+- [Screens](#screens)  
 - [Backend Context](#backend-overview)  
 - [Setup](#setup)
 - [Contact](#contact)
@@ -36,11 +37,11 @@ The project includes a dynamic **category system from MongoDB**, a sidebar with 
 - Categories are fetched from a MongoDB collection.
 - Rendered as checkbox filters.
 
-### 🔆🌙 Theme
+### 🌙 Theme
 - Light Mode
 - Dark Mode
 
-## 🎞️ Screens
+## 🎞️ **Screens**
 
 <img src="https://github.com/HiramSanchez/pacws-filesManager/blob/main/resources/img/pacws-ss4.png" width=800>
 
